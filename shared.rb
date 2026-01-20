@@ -34,9 +34,9 @@ end
 
 def parse_sysex(event)
   return nil unless event.is_a?(MIDI::SystemExclusive)
-  data = event.data
-  return nil if data.length < 7 || data[1] != MANUFACTURER_ID || data[2..5] != MAGIC
-  [data[6], data[7..]] # lol 67
+  data = event.data.drop_while { |b| b == 0xF0 } # midilib adds F0 on read, accumulates on each write cycle
+  return nil if data.length < 6 || data[0] != MANUFACTURER_ID || data[1..4] != MAGIC
+  [data[5], data[6..]]
 end
 
 def find_sxgf_events(seq)
