@@ -10,6 +10,8 @@ but `encode.rb <file> <midi file>` to add files as many times as you like, then 
 
 if you're using this for anything serious, you're a fool, but you should also know that a maliciously crafted MIDI file might be able to overwrite arbitrary paths. don't use untrusted MIDI files, i guess...
 
+also, max 128 files per MIDI. the file index is a single byte and MIDI data bytes max out at 127. could fix it but i'd need to have thought to include a version byte and honestly if you're stuffing more than 128 files into a MIDI you need to rethink some things.
+
 # how it works:
 
 MIDI has these things called SysEx (System Exclusive) messages that are basically "here's some proprietary blob, ignore it if you don't understand it". synths use them for firmware updates & shuffling patches around & what have you. we use them to hide files in your banger eurobeat remixes.
